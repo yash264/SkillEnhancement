@@ -1,3 +1,5 @@
+import React from "react";
+
 function Section() {
     return (
         <section>
@@ -5,24 +7,20 @@ function Section() {
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:items-center md:gap-8">
                     <div>
                         <div className="max-w-lg md:max-w-none">
-                            <h2 className="text-2xl font-semibold text-white sm:text-3xl">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            <h2 className="text-3xl font-extrabold text-sky-400 sm:text-5xl dark:text-white">
+                                Welcome to AI source.
                             </h2>
 
                             <p className="mt-4 text-white">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur doloremque saepe
-                                architecto maiores repudiandae amet perferendis repellendus, reprehenderit voluptas
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur doloremque saepe <strong className="text-indigo-300">
+                                architecto maiores repudiandae amet perferendis </strong> repellendus, reprehenderit voluptas
                                 sequi.
                             </p>
                         </div>
                     </div>
 
                     <div>
-                        <img
-                            src="https://images.unsplash.com/photo-1731690415686-e68f78e2b5bd?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                            className="rounded"
-                            alt=""
-                        />
+
                     </div>
                 </div>
             </div>

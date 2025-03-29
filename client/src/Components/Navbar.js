@@ -3,17 +3,6 @@ import React, { useState } from "react";
 import { Menu, MenuItem } from "../Layouts/Navbar";
 import { cn } from "../Helpers/utils";
 
-export function NavbarDemo() {
-    return (
-        <div className="relative w-full flex items-center justify-center">
-            <Navbar className="top-2" />
-            <p className="text-black dark:text-white">
-                The Navbar will show on top of the page
-            </p>
-        </div>
-    );
-}
-
 function Navbar({ className }) {
     const [active, setActive] = useState(null);
 

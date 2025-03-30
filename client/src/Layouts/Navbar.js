@@ -15,10 +15,11 @@ export const MenuItem = ({
     setActive,
     active,
     item,
-    children
+    children,
+    onClick
 }) => {
     return (
-        <div onMouseEnter={() => setActive(item)} className="relative ">
+        <div onMouseEnter={() => setActive(item)} className="relative " onClick={onClick} >
             <motion.p
                 transition={{ duration: 0.3 }}
                 className="cursor-pointer text-white hover:text-yellow-400 hover:opacity-[0.9] dark:text-white">

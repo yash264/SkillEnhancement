@@ -9,10 +9,23 @@ function Home() {
     return (
         <>
             <Navbar />
-            <Header />
-            <Features />
-            <Model />
-            <Footer />
+
+            <section id="home">
+                <Header />
+            </section>
+
+            <section id="features">
+                <Features />
+            </section>
+
+            <section id="model">
+                <Model />
+            </section>
+
+            <section id="about">
+                <Footer />
+            </section>
+
         </>
     )
 }

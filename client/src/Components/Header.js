@@ -17,8 +17,9 @@ function Header() {
           className="w-full h-full"
           particleColor="#FFFFFF" />
       </div>
+      
        <Section />
-
+       
     </div>
   );
 }

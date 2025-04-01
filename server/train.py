@@ -2,24 +2,24 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import mean_absolute_error, r2_score
 import joblib
 import random
 
 # Sample dataset (real-world data should be larger )
 data = {
-    'study_hours': [random.randint(1, 14) for _ in range(100)],
-    'sleep_hours': [random.randint(4, 14) for _ in range(100)],
-    'revision_frequency': [random.randint(1, 7) for _ in range(100)], 
-    'exam_stress_level': [random.randint(1, 5) for _ in range(100)], 
-    'preperation_level': [random.randint(1, 3) for _ in range(100)], 
-    'performance_scores': [random.randint(20, 90) for _ in range(100)], 
+    'study_hours': [random.randint(1, 15) for _ in range(10000)],
+    'sleep_hours': [random.randint(4, 15) for _ in range(10000)],
+    'revision_frequency': [random.randint(1, 7) for _ in range(10000)], 
+    'exam_stress_level': [random.randint(1, 5) for _ in range(10000)], 
+    'preperation_level': [random.randint(1, 3) for _ in range(10000)], 
+    'performance_scores': [random.randint(20, 80) for _ in range(10000)], 
 }
 
 
 # Performance Score (Target Variable) → Based on other factors
 data['performance_scores'] = [
-    (0.5*sh + 0.25*rf + 0.35*pl - 0.15*es + 0.4*sl) * 10 + random.uniform(-5, 5)
+    max(10, min(100,(0.40*sh + 0.20*rf + 0.35*pl - 0.20*es + 0.45*sl) * 10 + random.uniform(-5, 5)))
     for sh, sl, rf, es, pl in zip(
         data['study_hours'],
         data['sleep_hours'],
@@ -50,9 +50,11 @@ y_pred = model.predict(X_test)
 
 # Calculate Accuracy Metrics
 mae = mean_absolute_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
 
 # Print Accuracy Results
 print(f"Mean Absolute Error (MAE): {mae:.2f}")
+print(f"R² Score: {r2:.2f}")
 
 
 # Save model

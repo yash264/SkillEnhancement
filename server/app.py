@@ -30,13 +30,14 @@ def home():
     return "<h1>Welcome to Server Side.</h1>"
 
 
-# Labels for interpretation
-performance_labels = {
-    0: "poor",
-    1: "average",
-    2: "good",
-    3: "excellent"
-}
+# Classify student performance
+def classify_student(score):
+    if score >= 75:
+        return "good"
+    elif score >= 45:
+        return "average"
+    else:
+        return "poor"
 
 
 # route to predicting the score
@@ -50,7 +51,7 @@ def predict():
         sleep_hours = float(data["sleep_hours"])
         revision_frequency = int(data["revision_frequency"])
         exam_stress_level = int(data["exam_stress_level"])
-        previous_scores = float(data["previous_scores"])
+        preperation_level = int(data["preperation_level"])
 
         # Predict performance category
         prediction = model.predict(
@@ -60,18 +61,21 @@ def predict():
                     sleep_hours,
                     revision_frequency,
                     exam_stress_level,
-                    previous_scores
+                    preperation_level
                 ]
                 ])
             )[0]
         
+        # classify the category of student
+        final_score = max(10, min(100, prediction))
+        category = classify_student(final_score)
+
         # Get recommendation
-        performance = performance_labels[prediction]
-        recommendation = recommend_suggestion(performance)
+        recommendation = recommend_suggestion(category)
 
         return jsonify(
             {
-                "performance_category": int(prediction),
+                "performance_scores": float(prediction),
                 "recommendation": recommendation
             }
         )

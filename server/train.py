@@ -1,35 +1,58 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error
 import joblib
+import random
 
 # Sample dataset (real-world data should be larger )
 data = {
-    'study_hours': [5, 3, 4, 5, 6, 7, 8, 10, 12, 14, 6, 9, 6, 4, 7, 8, 10, 9, 5, 15],
-    'sleep_hours': [6, 7, 5, 6, 8, 9, 4, 3, 5, 6, 7, 8, 8, 12, 10, 7, 6, 5, 11, 4],
-    'revision_frequency': [2, 3, 1, 2, 4, 5, 4, 5, 3, 6, 2, 6, 4, 3, 1 , 6, 5, 4, 3, 7], 
-    'exam_stress_level': [3, 4, 5, 2, 1, 2, 3, 1, 2, 1, 4, 2, 3, 5, 4, 3, 1, 2, 4, 1],  
-    'previous_scores': [30, 45, 25, 40, 70, 80, 75, 90, 94, 96, 40, 75, 50, 15, 45, 72, 95, 80, 35, 98], 
-    'performance_label': [1, 1, 0, 1, 2, 3, 2, 3, 3, 3, 1, 2, 1, 0, 1, 2, 3, 3, 1, 3 ]  
+    'study_hours': [random.randint(1, 14) for _ in range(100)],
+    'sleep_hours': [random.randint(4, 14) for _ in range(100)],
+    'revision_frequency': [random.randint(1, 7) for _ in range(100)], 
+    'exam_stress_level': [random.randint(1, 5) for _ in range(100)], 
+    'preperation_level': [random.randint(1, 3) for _ in range(100)], 
+    'performance_scores': [random.randint(20, 90) for _ in range(100)], 
 }
+
+
+# Performance Score (Target Variable) → Based on other factors
+data['performance_scores'] = [
+    (0.5*sh + 0.25*rf + 0.35*pl - 0.15*es + 0.4*sl) * 10 + random.uniform(-5, 5)
+    for sh, sl, rf, es, pl in zip(
+        data['study_hours'],
+        data['sleep_hours'],
+        data['revision_frequency'],
+        data['exam_stress_level'],
+        data['preperation_level'],
+    )
+]
 
 df = pd.DataFrame(data)
 
+
 # Split data
-X = df.drop('performance_label', axis=1)
-y = df['performance_label']
+X = df[['study_hours', 'sleep_hours', 'revision_frequency', 'exam_stress_level', 'preperation_level']]
+y = df['performance_scores']
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 
 # Train Random Forest Model
-model = RandomForestClassifier(n_estimators=100, random_state=42)
+model = RandomForestRegressor(n_estimators=100, random_state=42)
 model.fit(X_train, y_train)
 
 
 # Make predictions on the test set
 y_pred = model.predict(X_test)
+
+
+# Calculate Accuracy Metrics
+mae = mean_absolute_error(y_test, y_pred)
+
+# Print Accuracy Results
+print(f"Mean Absolute Error (MAE): {mae:.2f}")
 
 
 # Save model

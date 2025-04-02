@@ -12,18 +12,43 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { Gauge } from '@mui/x-charts/Gauge';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import axios from "axios";
 
 
 function Model() {
 
-    const [preperation_level, setPreperationLevel] = useState("");
-    const [study_hours, setStudyHours] = useState("");
-    const [sleep_hours, setSleepHours] = useState("");
-    const [revision_frequency, setRevisionFrequency] = useState("");
-    const [exam_stress_level, setExamStressLevel] = useState("");
+    const [preperation_level, setPreperationLevel] = useState(0);
+    const [study_hours, setStudyHours] = useState(0);
+    const [sleep_hours, setSleepHours] = useState(0);
+    const [revision_frequency, setRevisionFrequency] = useState(0);
+    const [exam_stress_level, setExamStressLevel] = useState(0);
+    const [performance_scores, setPerformanceScores] = useState(0);
+    const [values, setValues] = useState([]);
+
+    axios.defaults.withCredentials = true;
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        try {
+            const response = await axios.post('http://localhost:4000/predict',
+                {
+                    preperation_level: preperation_level,
+                    study_hours: study_hours,
+                    sleep_hours: sleep_hours,
+                    revision_frequency: revision_frequency,
+                    exam_stress_level: exam_stress_level
+                }
+            );
+            setPerformanceScores(response.data.performance_scores);
+            setValues(response.data.recommendation[0]);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <>
@@ -31,15 +56,15 @@ function Model() {
             <section>
                 <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
 
-                    <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl dark:text-white">
-                        Machine Learning using
-                        <strong className="text-indigo-600"> Random Forest </strong>
-                        Classifiers
-                    </h1>
-
                     <div className="grid grid-cols-1 text-center gap-4 md:grid-cols-2 md:items-center md:gap-8">
                         <div>
                             <div className="max-w-lg md:max-w-none">
+
+                                <h1 className="text-4xl font-bold m-8 text-gray-900 sm:text-5xl dark:text-white">
+                                    Predict the
+                                    <strong className="text-indigo-600"> Score </strong>
+                                </h1>
+
                                 <Box
                                     component="form"
                                     sx={{ "& .MuiTextField-root": { m: 2, width: '30ch' } }}
@@ -52,26 +77,31 @@ function Model() {
                                                 labelId="demo-simple-select-helper-label"
                                                 id="demo-simple-select-helper"
                                                 label="Preperation Level"
+                                                onChange={(e) => setPreperationLevel(e.target.value)}
                                             >
                                                 <MenuItem value="">
                                                     <em>None</em>
                                                 </MenuItem>
-                                                <MenuItem value={1}>Have to Study</MenuItem>
-                                                <MenuItem value={2}>Moderate</MenuItem>
-                                                <MenuItem value={3}>Well Prepared</MenuItem>
+                                                <MenuItem value={1} onChange={(e) => setPreperationLevel(e.target.value)}>Have to Study</MenuItem>
+                                                <MenuItem value={2} onChange={(e) => setPreperationLevel(e.target.value)}>Moderate</MenuItem>
+                                                <MenuItem value={3} onChange={(e) => setPreperationLevel(e.target.value)}>Well Prepared</MenuItem>
                                             </Select>
                                             <FormHelperText>Enter your exam Preperation Level</FormHelperText>
                                         </FormControl>
 
                                         <TextField
+                                            type="number"
                                             helperText="Enter your Study Hours"
                                             id="demo-helper-text-aligned"
                                             label="Study Hours"
+                                            onChange={(e) => setStudyHours(e.target.value)}
                                         />
                                         <TextField
+                                            type="number"
                                             helperText="Enter your Sleeping Hrs"
                                             id="demo-helper-text-aligned"
                                             label="Sleep Hours"
+                                            onChange={(e) => setSleepHours(e.target.value)}
                                         />
 
                                         <FormControl sx={{ m: 2, minWidth: 260 }}>
@@ -80,17 +110,18 @@ function Model() {
                                                 labelId="demo-simple-select-helper-label"
                                                 id="demo-simple-select-helper"
                                                 label="Revision Frequency"
+                                                onChange={(e) => setRevisionFrequency(e.target.value)}
                                             >
                                                 <MenuItem value="">
                                                     <em>None</em>
                                                 </MenuItem>
-                                                <MenuItem value={1}>Once in a week</MenuItem>
-                                                <MenuItem value={2}>Twice a week</MenuItem>
-                                                <MenuItem value={3}>Thrice a week</MenuItem>
-                                                <MenuItem value={4}>4 Days</MenuItem>
-                                                <MenuItem value={5}>5 Days</MenuItem>
-                                                <MenuItem value={6}>6 Days</MenuItem>
-                                                <MenuItem value={7}>EveryDay</MenuItem>
+                                                <MenuItem value={1} onChange={(e) => setRevisionFrequency(e.target.value)}>Once in a week</MenuItem>
+                                                <MenuItem value={2} onChange={(e) => setRevisionFrequency(e.target.value)}>Twice a week</MenuItem>
+                                                <MenuItem value={3} onChange={(e) => setRevisionFrequency(e.target.value)}>Thrice a week</MenuItem>
+                                                <MenuItem value={4} onChange={(e) => setRevisionFrequency(e.target.value)}>4 Days</MenuItem>
+                                                <MenuItem value={5} onChange={(e) => setRevisionFrequency(e.target.value)}>5 Days</MenuItem>
+                                                <MenuItem value={6} onChange={(e) => setRevisionFrequency(e.target.value)}>6 Days</MenuItem>
+                                                <MenuItem value={7} onChange={(e) => setRevisionFrequency(e.target.value)}>EveryDay</MenuItem>
                                             </Select>
                                             <FormHelperText>Enter your Revision Frequency</FormHelperText>
                                         </FormControl>
@@ -101,20 +132,24 @@ function Model() {
                                                 labelId="demo-simple-select-helper-label"
                                                 id="demo-simple-select-helper"
                                                 label="Exam Stress Level"
+                                                onChange={(e) => setExamStressLevel(e.target.value)}
                                             >
                                                 <MenuItem value="">
                                                     <em>None</em>
                                                 </MenuItem>
-                                                <MenuItem value={1}>One</MenuItem>
-                                                <MenuItem value={2}>Two</MenuItem>
-                                                <MenuItem value={3}>Three</MenuItem>
-                                                <MenuItem value={4}>Four</MenuItem>
-                                                <MenuItem value={5}>Five</MenuItem>
+                                                <MenuItem value={1} onChange={(e) => setExamStressLevel(e.target.value)}>One</MenuItem>
+                                                <MenuItem value={2} onChange={(e) => setExamStressLevel(e.target.value)}>Two</MenuItem>
+                                                <MenuItem value={3} onChange={(e) => setExamStressLevel(e.target.value)}>Three</MenuItem>
+                                                <MenuItem value={4} onChange={(e) => setExamStressLevel(e.target.value)}>Four</MenuItem>
+                                                <MenuItem value={5} onChange={(e) => setExamStressLevel(e.target.value)}>Five</MenuItem>
                                             </Select>
                                             <FormHelperText>Enter Exam Stress Level</FormHelperText>
                                         </FormControl>
 
-                                        <Stack marginLeft={6}>
+                                        <Stack
+                                            justifyContent="center"
+                                            alignItems="center"
+                                        >
                                             <Button
                                                 variant="outlined"
                                                 color="success"
@@ -125,8 +160,9 @@ function Model() {
                                                         color: 'white',
                                                         borderColor: 'green'
                                                     }
-                                                }}>
-                                                Success
+                                                }}
+                                                onClick={handleSubmit}>
+                                                Check Score
                                             </Button>
                                         </Stack>
                                     </div>
@@ -136,21 +172,42 @@ function Model() {
                         </div>
 
                         <div>
-                            <Stack direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 1, md: 3 }}>
-                                <Gauge width={200} height={200} value={50} />
+                            <Stack
+                                direction={{ xs: 'column', md: 'row', }}
+                                spacing={{ xs: 1, md: 3 }}
+                                justifyContent="center"
+                                alignItems="center">
+                                <Gauge width={150} height={150}
+                                    value={performance_scores == null ? 0 : performance_scores} />
                             </Stack>
 
                             <Card sx={{ minWidth: 275 }}>
                                 <CardContent>
-                                    <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
-                                        Word of the Day
+
+                                    <Typography gutterBottom
+                                        sx={{ color: 'text.primary', fontSize: 14, fontWeight: 'bold'}}>
+                                        Performance Analysis
                                     </Typography>
-                                    <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>adjective</Typography>
-                                    <Typography variant="body2">
-                                        well meaning and kindly.
+
+                                    <Typography gutterBottom
+                                        sx={{ color: 'text.primary', fontSize: 14, fontWeight: 'bold', display: 'inline', textAlign: 'left' }}>
+                                        Reccomendation: &nbsp;
+                                    </Typography>
+                                    <Typography variant="body2" gutterBottom sx={{ display: 'inline' }}>
+                                        {values == null ? "" : values.tag}.
                                         <br />
-                                        {'"a benevolent smile"'}
+                                        {values == null ? "" : values.suggest}
                                     </Typography>
+                                    <br />
+
+                                    <Typography gutterBottom
+                                        sx={{ color: 'text.primary', fontSize: 14, fontWeight: 'bold', display: 'inline' }}>
+                                        Remember: &nbsp;
+                                    </Typography>
+                                    <Typography variant="body2" gutterBottom sx={{ display: 'inline' }}>
+                                        {values == null ? "" : values.motivate}
+                                    </Typography>
+
                                 </CardContent>
                             </Card>
                         </div>

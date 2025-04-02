@@ -1,10 +1,12 @@
 "use client";
 import React from "react";
+import { useState } from "react";
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import FormHelperText from '@mui/material/FormHelperText';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -17,50 +19,119 @@ import Typography from '@mui/material/Typography';
 
 function Model() {
 
-    const [age, setAge] = React.useState('');
-    const handleChange = (event) => {
-        setAge(event.target.value);
-    };
+    const [preperation_level, setPreperationLevel] = useState("");
+    const [study_hours, setStudyHours] = useState("");
+    const [sleep_hours, setSleepHours] = useState("");
+    const [revision_frequency, setRevisionFrequency] = useState("");
+    const [exam_stress_level, setExamStressLevel] = useState("");
 
     return (
         <>
-            <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl dark:text-white">
-                Machine Learning using
-                <strong className="text-indigo-600"> Random Forest </strong>
-                Classifiers
-            </h1>
 
             <section>
                 <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:items-center md:gap-8">
+
+                    <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl dark:text-white">
+                        Machine Learning using
+                        <strong className="text-indigo-600"> Random Forest </strong>
+                        Classifiers
+                    </h1>
+
+                    <div className="grid grid-cols-1 text-center gap-4 md:grid-cols-2 md:items-center md:gap-8">
                         <div>
                             <div className="max-w-lg md:max-w-none">
-                                <Box sx={{ minWidth: 120 }}>
-                                    <FormControl fullWidth>
-                                        <TextField id="outlined-basic" label="Name" variant="outlined" />
-                                    </FormControl>
+                                <Box
+                                    component="form"
+                                    sx={{ "& .MuiTextField-root": { m: 2, width: '30ch' } }}
+                                >
+                                    <div>
 
-                                    <FormControl fullWidth>
-                                        <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                                        <Select
-                                            labelId="demo-simple-select-label"
-                                            id="demo-simple-select"
-                                            value={age}
-                                            label="Age"
-                                            onChange={handleChange}
-                                        >
-                                            <MenuItem value={10}>Ten</MenuItem>
-                                            <MenuItem value={20}>Twenty</MenuItem>
-                                            <MenuItem value={30}>Thirty</MenuItem>
-                                        </Select>
-                                    </FormControl>
+                                        <FormControl sx={{ m: 2, minWidth: 320 }}>
+                                            <InputLabel id="demo-simple-select-helper-label">Preperation Level</InputLabel>
+                                            <Select
+                                                labelId="demo-simple-select-helper-label"
+                                                id="demo-simple-select-helper"
+                                                label="Preperation Level"
+                                            >
+                                                <MenuItem value="">
+                                                    <em>None</em>
+                                                </MenuItem>
+                                                <MenuItem value={1}>Have to Study</MenuItem>
+                                                <MenuItem value={2}>Moderate</MenuItem>
+                                                <MenuItem value={3}>Well Prepared</MenuItem>
+                                            </Select>
+                                            <FormHelperText>Enter your exam Preperation Level</FormHelperText>
+                                        </FormControl>
 
-                                    <Stack padding={6}>
-                                        <Button variant="outlined" color="success">
-                                            Success
-                                        </Button>
-                                    </Stack>
+                                        <TextField
+                                            helperText="Enter your Study Hours"
+                                            id="demo-helper-text-aligned"
+                                            label="Study Hours"
+                                        />
+                                        <TextField
+                                            helperText="Enter your Sleeping Hrs"
+                                            id="demo-helper-text-aligned"
+                                            label="Sleep Hours"
+                                        />
+
+                                        <FormControl sx={{ m: 2, minWidth: 260 }}>
+                                            <InputLabel id="demo-simple-select-helper-label">Revision Frequency</InputLabel>
+                                            <Select
+                                                labelId="demo-simple-select-helper-label"
+                                                id="demo-simple-select-helper"
+                                                label="Revision Frequency"
+                                            >
+                                                <MenuItem value="">
+                                                    <em>None</em>
+                                                </MenuItem>
+                                                <MenuItem value={1}>Once in a week</MenuItem>
+                                                <MenuItem value={2}>Twice a week</MenuItem>
+                                                <MenuItem value={3}>Thrice a week</MenuItem>
+                                                <MenuItem value={4}>4 Days</MenuItem>
+                                                <MenuItem value={5}>5 Days</MenuItem>
+                                                <MenuItem value={6}>6 Days</MenuItem>
+                                                <MenuItem value={7}>EveryDay</MenuItem>
+                                            </Select>
+                                            <FormHelperText>Enter your Revision Frequency</FormHelperText>
+                                        </FormControl>
+
+                                        <FormControl sx={{ m: 2, minWidth: 260 }}>
+                                            <InputLabel id="demo-simple-select-helper-label">Exam Stress Level</InputLabel>
+                                            <Select
+                                                labelId="demo-simple-select-helper-label"
+                                                id="demo-simple-select-helper"
+                                                label="Exam Stress Level"
+                                            >
+                                                <MenuItem value="">
+                                                    <em>None</em>
+                                                </MenuItem>
+                                                <MenuItem value={1}>One</MenuItem>
+                                                <MenuItem value={2}>Two</MenuItem>
+                                                <MenuItem value={3}>Three</MenuItem>
+                                                <MenuItem value={4}>Four</MenuItem>
+                                                <MenuItem value={5}>Five</MenuItem>
+                                            </Select>
+                                            <FormHelperText>Enter Exam Stress Level</FormHelperText>
+                                        </FormControl>
+
+                                        <Stack marginLeft={6}>
+                                            <Button
+                                                variant="outlined"
+                                                color="success"
+                                                sx={{
+                                                    width: '50ch',
+                                                    '&:hover': {
+                                                        backgroundColor: 'green',
+                                                        color: 'white',
+                                                        borderColor: 'green'
+                                                    }
+                                                }}>
+                                                Success
+                                            </Button>
+                                        </Stack>
+                                    </div>
                                 </Box>
+
                             </div>
                         </div>
 
@@ -81,9 +152,6 @@ function Model() {
                                         {'"a benevolent smile"'}
                                     </Typography>
                                 </CardContent>
-                                <CardActions>
-                                    <Button size="small">Learn More</Button>
-                                </CardActions>
                             </Card>
                         </div>
                     </div>

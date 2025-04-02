@@ -9,13 +9,15 @@ function Section() {
                     <div>
                         <div className="max-w-lg md:max-w-none text-center">
                             <h2 className="text-3xl font-extrabold text-sky-400 sm:text-5xl dark:text-white">
-                                Welcome to AI source.
+                                Welcome to VidyaVaani.
                             </h2>
 
                             <p className="mt-4 text-white">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur doloremque saepe <strong className="text-indigo-300">
-                                    architecto maiores repudiandae amet perferendis </strong> repellendus, reprehenderit voluptas
-                                sequi.
+                                VidyaVaani is an AI-driven student performance prediction and guidance system that analyzes study habits, preparation strategies, and exam stress levels to provide personalized recommendations for academic improvement.
+                            </p>
+
+                            <p className="mt-4 text-white">
+                                VidyaVaani aims to revolutionize education by combining AI, psychology, and ancient knowledge to create a smarter, more focused, and empowered generation.
                             </p>
 
                             <a

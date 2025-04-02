@@ -1,4 +1,5 @@
 import { AiFillLinkedin, AiOutlineGithub, AiFillInstagram } from "react-icons/ai";
+import { ImLocation, ImEnvelop } from "react-icons/im";
 
 function Footer() {
 
@@ -7,13 +8,17 @@ function Footer() {
             <div className="mx-auto max-w-screen-xl px-4 pt-16 pb-8 sm:px-6 lg:px-8 lg:pt-24">
                 <div className="text-center">
                     <h2 className="text-3xl font-extrabold text-sky-400 sm:text-5xl dark:text-white">
-                        Customise Your Product
+                        Stay Connected
                     </h2>
 
-                    <p className="mx-auto mt-4 max-w-sm text-white dark:text-white">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum maiores ipsum eos temporibus
-                        ea nihil.
-                    </p>
+                    <div class="col-4 mx-auto mt-4 max-w-sm text-center text-white">
+                        <p className="flex items-center gap-2">
+                            <ImEnvelop /> yash.20222068@mnnit.ac.in
+                        </p>
+                        <p className="flex items-center gap-2">
+                            <ImLocation /> National Institute of Technology Prayagraj
+                        </p>
+                    </div>
 
                     <a
                         href="#"
@@ -27,7 +32,7 @@ function Footer() {
                     className="mt-16 border-t border-gray-100 pt-8 sm:flex sm:items-center sm:justify-between lg:mt-24 dark:border-gray-800"
                 >
                     <ul className="flex flex-wrap justify-center gap-4 text-xs lg:justify-end">
-                        
+
                         <p className="text-white text-sm transition hover:opacity-75 dark:text-white">
                             &copy; Designed, Developed & Hosted by National Informatics Center.
                         </p>
@@ -44,7 +49,7 @@ function Footer() {
                             >
                                 <span className="sr-only">LinkedIn</span>
                                 <AiFillLinkedin />
-                                
+
                             </a>
                         </li>
 
@@ -57,7 +62,7 @@ function Footer() {
                             >
                                 <span className="sr-only">Instagram</span>
                                 <AiFillInstagram />
-                                
+
                             </a>
                         </li>
 
@@ -70,7 +75,7 @@ function Footer() {
                             >
                                 <span className="sr-only">Github</span>
                                 <AiOutlineGithub />
-                                
+
                             </a>
                         </li>
 

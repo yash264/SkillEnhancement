@@ -93,5 +93,6 @@ def start_server():
 
 
 if __name__ == '__main__':
-    app.run(port=4000)
+    from gunicorn.app.wsgiapp import run
+    run()
 

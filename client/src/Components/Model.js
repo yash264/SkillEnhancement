@@ -14,6 +14,7 @@ import { Gauge } from '@mui/x-charts/Gauge';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
 import axios from "axios";
 
 
@@ -26,6 +27,7 @@ function Model() {
     const [exam_stress_level, setExamStressLevel] = useState(0);
     const [performance_scores, setPerformanceScores] = useState(0);
     const [values, setValues] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState({ study: false, sleep: false });
 
 
@@ -33,6 +35,7 @@ function Model() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setLoading(true);
 
         try {
             const response = await axios.post('https://vidyavaaniserver.onrender.com/predict',
@@ -46,6 +49,7 @@ function Model() {
             );
             setPerformanceScores(response.data.performance_scores);
             setValues(response.data.recommendation[0]);
+            setLoading(false);
         }
         catch (error) {
             console.log(error);
@@ -164,25 +168,37 @@ function Model() {
                                             <FormHelperText>Enter Exam Stress Level</FormHelperText>
                                         </FormControl>
 
-                                        <Stack
-                                            justifyContent="center"
-                                            alignItems="center"
-                                        >
-                                            <Button
-                                                variant="outlined"
-                                                color="success"
-                                                sx={{
-                                                    width: '50ch',
-                                                    '&:hover': {
-                                                        backgroundColor: 'green',
-                                                        color: 'white',
-                                                        borderColor: 'green'
-                                                    }
-                                                }}
-                                                onClick={handleSubmit}>
-                                                Check Score
-                                            </Button>
-                                        </Stack>
+                                        {
+                                            loading === false ?
+                                                <Stack
+                                                    justifyContent="center"
+                                                    alignItems="center"
+                                                >
+                                                    <Button
+                                                        variant="outlined"
+                                                        color="success"
+                                                        sx={{
+                                                            width: '50ch',
+                                                            '&:hover': {
+                                                                backgroundColor: 'green',
+                                                                color: 'white',
+                                                                borderColor: 'green'
+                                                            }
+                                                        }}
+                                                        onClick={handleSubmit}>
+                                                        Check Score
+                                                    </Button>
+                                                </Stack>
+                                                :
+                                                <Box
+                                                    justifyContent="center"
+                                                    alignItems="center"
+                                                    sx={{ display: 'flex' }}
+                                                >
+                                                    <CircularProgress />
+                                                </Box>
+                                        }
+
                                     </div>
                                 </Box>
 

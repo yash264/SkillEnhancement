@@ -84,6 +84,14 @@ def predict():
         return jsonify({"error": str(error)})
 
 
+#  start the server on hosting
+@app.route("/startServer", methods=['GET'])
+def start_server():
+    return jsonify({
+        "message": "Server started successfully!"
+    })
+
+
 if __name__ == '__main__':
     app.run(port=4000)
 

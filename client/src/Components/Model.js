@@ -35,7 +35,7 @@ function Model() {
         e.preventDefault()
 
         try {
-            const response = await axios.post('http://localhost:4000/predict',
+            const response = await axios.post('https://vidyavaaniserver.onrender.com/predict',
                 {
                     preperation_level: preperation_level,
                     study_hours: study_hours,

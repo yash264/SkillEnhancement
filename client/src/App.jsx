@@ -9,7 +9,7 @@ function App() {
 
   const startServer = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/startServer');
+      const response = await axios.get('https://vidyavaaniserver.onrender.com/startServer');
 
       console.log(response.data.message);
 

@@ -26,6 +26,8 @@ function Model() {
     const [exam_stress_level, setExamStressLevel] = useState(0);
     const [performance_scores, setPerformanceScores] = useState(0);
     const [values, setValues] = useState([]);
+    const [error, setError] = useState({ study: false, sleep: false });
+
 
     axios.defaults.withCredentials = true;
 
@@ -49,6 +51,20 @@ function Model() {
             console.log(error);
         }
     }
+
+    const handleInputChange = (event, setValue, field) => {
+        let value = event.target.value;
+
+        let numericValue = Number(value);
+
+        if (numericValue < 0 || numericValue > 16 || isNaN(numericValue)) {
+            setError((prev) => ({ ...prev, [field]: true }));
+        } else {
+            setError((prev) => ({ ...prev, [field]: false }));
+        }
+
+        setValue(numericValue);
+    };
 
     return (
         <>
@@ -80,7 +96,7 @@ function Model() {
                                                 onChange={(e) => setPreperationLevel(e.target.value)}
                                             >
                                                 <MenuItem value="">
-                                                    <em>None</em>
+                                                    <em>Choose</em>
                                                 </MenuItem>
                                                 <MenuItem value={1} onChange={(e) => setPreperationLevel(e.target.value)}>Have to Study</MenuItem>
                                                 <MenuItem value={2} onChange={(e) => setPreperationLevel(e.target.value)}>Moderate</MenuItem>
@@ -91,20 +107,22 @@ function Model() {
 
                                         <TextField
                                             type="number"
-                                            helperText="Enter your Study Hours"
+                                            helperText={error.study ? "Range of Human studing vary from 0-16 hrs" : "Enter your Study Hours"}
+                                            error={error.study}
                                             id="demo-helper-text-aligned"
                                             label="Study Hours"
-                                            onChange={(e) => setStudyHours(e.target.value)}
+                                            onChange={(e) => handleInputChange(e, setStudyHours, "study")}
                                         />
                                         <TextField
                                             type="number"
-                                            helperText="Enter your Sleeping Hrs"
+                                            helperText={error.sleep ? "Range of Human sleeping vary from 0-16 hrs" : "Enter your Sleeping Hours"}
+                                            error={error.sleep}
                                             id="demo-helper-text-aligned"
                                             label="Sleep Hours"
-                                            onChange={(e) => setSleepHours(e.target.value)}
+                                            onChange={(e) => handleInputChange(e, setSleepHours, "sleep")}
                                         />
 
-                                        <FormControl sx={{ m: 2, minWidth: 260 }}>
+                                        <FormControl sx={{ m: 1.5, minWidth: 260 }}>
                                             <InputLabel id="demo-simple-select-helper-label">Revision Frequency</InputLabel>
                                             <Select
                                                 labelId="demo-simple-select-helper-label"
@@ -113,7 +131,7 @@ function Model() {
                                                 onChange={(e) => setRevisionFrequency(e.target.value)}
                                             >
                                                 <MenuItem value="">
-                                                    <em>None</em>
+                                                    <em>Choose</em>
                                                 </MenuItem>
                                                 <MenuItem value={1} onChange={(e) => setRevisionFrequency(e.target.value)}>Once in a week</MenuItem>
                                                 <MenuItem value={2} onChange={(e) => setRevisionFrequency(e.target.value)}>Twice a week</MenuItem>
@@ -126,7 +144,7 @@ function Model() {
                                             <FormHelperText>Enter your Revision Frequency</FormHelperText>
                                         </FormControl>
 
-                                        <FormControl sx={{ m: 2, minWidth: 260 }}>
+                                        <FormControl sx={{ m: 1.5, minWidth: 260 }}>
                                             <InputLabel id="demo-simple-select-helper-label">Exam Stress Level</InputLabel>
                                             <Select
                                                 labelId="demo-simple-select-helper-label"
@@ -135,7 +153,7 @@ function Model() {
                                                 onChange={(e) => setExamStressLevel(e.target.value)}
                                             >
                                                 <MenuItem value="">
-                                                    <em>None</em>
+                                                    <em>Choose</em>
                                                 </MenuItem>
                                                 <MenuItem value={1} onChange={(e) => setExamStressLevel(e.target.value)}>One</MenuItem>
                                                 <MenuItem value={2} onChange={(e) => setExamStressLevel(e.target.value)}>Two</MenuItem>
@@ -172,6 +190,11 @@ function Model() {
                         </div>
 
                         <div>
+                            <Typography gutterBottom
+                                sx={{ color: 'text.primary', fontSize: 14, fontWeight: 'bold' }}>
+                                Performance Analysis
+                            </Typography>
+
                             <Stack
                                 direction={{ xs: 'column', md: 'row', }}
                                 spacing={{ xs: 1, md: 3 }}
@@ -183,11 +206,6 @@ function Model() {
 
                             <Card sx={{ minWidth: 275 }}>
                                 <CardContent>
-
-                                    <Typography gutterBottom
-                                        sx={{ color: 'text.primary', fontSize: 14, fontWeight: 'bold'}}>
-                                        Performance Analysis
-                                    </Typography>
 
                                     <Typography gutterBottom
                                         sx={{ color: 'text.primary', fontSize: 14, fontWeight: 'bold', display: 'inline', textAlign: 'left' }}>
